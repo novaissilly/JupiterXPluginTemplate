@@ -7,8 +7,6 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-
-		<OutputPath>..\..\Debug\</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
