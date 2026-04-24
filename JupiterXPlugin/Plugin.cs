@@ -31,7 +31,7 @@ namespace JupiterXPlugin
             Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Decline Prompt"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
             Buttons.AddButtons(Buttons.GetCategory(catergoryName), new ButtonInfo[]
             {
-                new ButtonInfo { buttonText = "Back", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false },
+                new ButtonInfo { buttonText = $"Exit {catergoryName}", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false },
                 new ButtonInfo { buttonText = "Fly", method = () => RightTriggerFly(), isTogglable = true }
             });
         }
@@ -56,8 +56,8 @@ namespace JupiterXPlugin
             if (Buttons.CurrentCategoryIndex == catergoryIndex)
                 Buttons.CurrentCategoryIndex = 0;
             Buttons.RemoveCategory(catergoryName);
-            Buttons.RemoveButton(Buttons.GetCategory("Main"), "Open Plugin");
-            Utility.Log("[Plugin] Unloading {}.");
+            Buttons.RemoveButton(Buttons.GetCategory("Main"), catergoryName);
+            Utility.Log($"Unloading plugin {catergoryName}.");
         }
     }
 }
