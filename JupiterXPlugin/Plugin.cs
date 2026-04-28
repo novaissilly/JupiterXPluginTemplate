@@ -1,40 +1,49 @@
-﻿using JupiterX;
+using JupiterX;
 using JupiterX.Classes;
 using JupiterX.Menu;
 using JupiterX.Mods;
 using UnityEngine;
 using MelonLoader;
 
-[assembly: MelonInfo(typeof(JupiterXPlugin.JupiterPlugin), "JupiterX PLugin", "1.0.0", "YourName")] // Change this to your plugin name and your name
+[assembly: MelonInfo(typeof(JupiterXPlugin.JupiterPlugin), "JupiterX Plugin", "1.0.0", "YourName")]
 [assembly: MelonGame(null, null)]
 
 namespace JupiterXPlugin
 {
-    public class JupiterPlugin : MelonMod // How to use, Build this then go to your Game Files then go to JupiterX/Plugins folder and put the dll there and it will load
+    public class JupiterPlugin : MelonMod
     {
-        private int catergoryIndex = -1;
-        private string catergoryName = "Extra Movement"; // Change this to like "Extra Movement" or what ever you want your plugin to be
+        private int categoryIndex = -1;
+        private string categoryName = "Extra Movement";
 
         public override void OnInitializeMelon()
         {
-            Buttons.AddCategory(catergoryName);
+            categoryIndex = Buttons.GetCategory(categoryName);
+            if (categoryIndex == -1)
+                categoryIndex = Buttons.AddCategory(categoryName);
+
+            Buttons.RemoveButton(Buttons.GetCategory("Main"), categoryName);
+
             Buttons.AddButton(Buttons.GetCategory("Main"), new ButtonInfo
             {
-                buttonText = catergoryName,
-                method = () =>
-                {
-                    Buttons.CurrentCategoryName = catergoryName;
-                },
+                buttonText = categoryName,
+                method = () => Buttons.CurrentCategoryName = categoryName,
                 isTogglable = false
             });
-            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Accept Prompt"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
-            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Decline Prompt"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
-            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Global Return"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
-            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Search"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
-            Buttons.AddButtons(Buttons.GetCategory(catergoryName), new ButtonInfo[]
+
+            Buttons.AddButtons(categoryIndex, new ButtonInfo[]
             {
-                new ButtonInfo { buttonText = $"Exit {catergoryName}", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false },
-                new ButtonInfo { buttonText = "Fly", method = () => RightTriggerFly(), isTogglable = true }
+                new ButtonInfo
+                {
+                    buttonText = $"Exit {categoryName}",
+                    method = () => Buttons.CurrentCategoryName = "Main",
+                    isTogglable = false
+                },
+                new ButtonInfo
+                {
+                    buttonText = "Fly",
+                    method = () => RightTriggerFly(),
+                    isTogglable = true
+                }
             });
         }
 
@@ -47,19 +56,20 @@ namespace JupiterXPlugin
             }
         }
 
-
         public override void OnUpdate()
         {
-            // You can put something here if you want it to run every frame without a toggle
+            // Your code here for updating always
         }
 
-        public void OnUnload() // Unloads the plugin
+        public void OnUnload()
         {
-            if (Buttons.CurrentCategoryIndex == catergoryIndex)
-                Buttons.CurrentCategoryIndex = 0;
-            Buttons.RemoveCategory(catergoryName);
-            Buttons.RemoveButton(Buttons.GetCategory("Main"), catergoryName);
-            Utility.Log($"Unloading plugin {catergoryName}.");
+            if (Buttons.CurrentCategoryIndex == categoryIndex)
+                Buttons.CurrentCategoryIndex = Buttons.GetCategory("Main");
+
+            Buttons.RemoveCategory(categoryName);
+            Buttons.RemoveButton(Buttons.GetCategory("Main"), categoryName);
+
+            Utility.Log($"Unloading plugin {categoryName}");
         }
     }
 }
