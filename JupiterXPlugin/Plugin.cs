@@ -45,6 +45,16 @@ namespace JupiterXPlugin
                     isTogglable = true
                 }
             });
+
+            int cat = Buttons.GetCategory(catergoryName);
+
+            Buttons.buttons[cat] = Buttons.buttons[cat]
+                .Where(b =>
+                    b.buttonText != "Search" &&
+                    b.buttonText != "Global Return" &&
+                    b.buttonText != "Accept Prompt" &&
+                    b.buttonText != "Decline Prompt")
+                .ToArray();
         }
 
         private static void RightTriggerFly()
