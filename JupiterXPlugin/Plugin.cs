@@ -29,6 +29,8 @@ namespace JupiterXPlugin
             });
             Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Accept Prompt"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
             Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Decline Prompt"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
+            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Global Return"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
+            Buttons.RemoveButton(Buttons.GetCategory(catergoryName), "Search"); // DO NOT REMOVE because this is dumb and im lazy so dont remove unless you wanna see this on your plugin
             Buttons.AddButtons(Buttons.GetCategory(catergoryName), new ButtonInfo[]
             {
                 new ButtonInfo { buttonText = $"Exit {catergoryName}", method = () => Buttons.CurrentCategoryName = "Main", isTogglable = false },
